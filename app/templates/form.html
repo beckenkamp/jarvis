@@ -1,16 +1,59 @@
 <html>
 	<head>
 		<title>Test</title>
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/static/bower_components/bootstrap-material-design/dist/css/material-wfont.min.css" rel="stylesheet">
+		<link href="/static/bower_components/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
 	</head>
 	<body>
-		<form method="post" action="/">
-			<input name="chat" id="chat" value="" />
-			<button type="submit">Go!</button>
-		</form>
 
-		{% if resp %}
-		<p>{{ resp }}</p>
-		{% endif %}
-		
+		<div class="navbar navbar-warning">
+		    <div class="navbar-header">
+		        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-warning-collapse">
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		        </button>
+		        <a class="navbar-brand" href="javascript:void(0)">Jarvis</a>
+		    </div>
+		    <div class="navbar-collapse collapse navbar-warning-collapse">
+		        <ul class="nav navbar-nav">
+		            <li class="active"><a href="javascript:void(0)">Chat</a></li>
+		        </ul>
+		    </div>
+		</div>
+
+		<div class="container-fluid">
+
+			<div class="col-xs-6">
+				<div class="jumbotron">
+					<h1>Jarvis</h1>
+					<p>Practicing english conversations with Jarvis the chatbot.</p>
+					<p><a class="btn btn-primary btn-lg">Learn more</a></p>
+				</div>
+			</div>
+
+			<div class="col-xs-6">
+				<form method="post" action="/">
+					<input name="chat" id="chat" value="" class="form-control" 
+					{% if resp is not defined %}
+					placeholder="Chat" data-hint="Let's try some conversation here? You can start by saying your name."
+					{% endif %} />
+					<button class="btn btn-default">Go!<div class="ripple-wrapper"></div></button>
+				</form>
+
+				{% if resp %}
+				<p>{{ resp }}</p>
+				{% endif %}
+			</div>
+		</div>
+
+		<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+		<script src="/static/bower_components/bootstrap-material-design/dist/js/material.js"></script>
+		<script src="/static/bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+		<script>
+	      	$.material.init();
+	    </script>
 	</body>
 </html>

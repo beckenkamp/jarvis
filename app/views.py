@@ -1,16 +1,16 @@
-from flask import render_template, request
+from flask import render_template, request, jsonify
 from app import app, k
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
+@app.route('/index', methods=['GET'])
 def index():
-    if request.method == 'POST':
-        question = request.form['chat']
-        response = k.respond(question)
-        return render_template('form.html',
-        						resp=response)
-    else:
-    	return render_template('form.html')
+    return render_template('index.html')
+
+@app.route('/talk', methods=['GET'])
+def talk():
+    question = request.args.get('question')
+    answer = k.respond(question)
+    return jsonify(question=question, answer=answer)
 
 @app.errorhandler(404)
 def page_not_found(e):

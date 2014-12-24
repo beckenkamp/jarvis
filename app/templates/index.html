@@ -1,0 +1,105 @@
+<html>
+	<head>
+		<title>Talk to Jarvis</title>
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/static/bower_components/bootstrap-material-design/dist/css/material-wfont.min.css" rel="stylesheet">
+		<link href="/static/bower_components/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
+	</head>
+	<body>
+
+		<div class="navbar navbar-warning">
+		    <div class="navbar-header">
+		        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-warning-collapse">
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		            <span class="icon-bar"></span>
+		        </button>
+		        <a class="navbar-brand" href="javascript:void(0)">Jarvis</a>
+		    </div>
+		    <div class="navbar-collapse collapse navbar-warning-collapse">
+		        <ul class="nav navbar-nav">
+		            <li class="active"><a href="javascript:void(0)">Chat</a></li>
+		        </ul>
+		    </div>
+		</div>
+
+		<div class="container-fluid">
+
+			<div class="col-xs-6">
+				<div class="jumbotron">
+					<h1>Jarvis</h1>
+					<p>Practicing english conversations with Jarvis the chatbot.</p>
+					<p><a class="btn btn-primary btn-lg">Learn more</a></p>
+				</div>
+			</div>
+
+			<div class="col-xs-6">
+
+				<div id="the-chat" style="max-height: 275px; overflow-y: scroll;">
+					<div class="list-group">
+					</div>
+				</div>
+
+				<form id="the-form" method="post" action="/">
+					<input name="question" id="question" value="" class="form-control" placeholder="Chat" data-hint="Let's try some conversation here?" />
+					<button class="btn btn-default">Go!<div class="ripple-wrapper"></div></button>
+				</form>
+			</div>
+		</div>
+
+		<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+		<script src="/static/bower_components/bootstrap-material-design/dist/js/material.js"></script>
+		<script src="/static/bower_components/bootstrap-material-design/dist/js/ripples.js"></script>
+		<script src="/static/js/moment.min.js"></script>
+		<script>
+	      	$.material.init();
+
+	      	$(document).ready(function(){
+
+	      		$('#the-form').submit(function(){
+
+	      			question = $('#question').val();
+	      			$('#question').val('');
+
+	      			$('#the-chat .list-group').append(template(question, 'Me'));
+
+	      			$.getJSON('/talk', { 'question': question }, function(data){
+	      				$('#the-chat .list-group').append(template(data.answer, 'Jarvis'));
+	      			});
+
+	      			$("#the-chat").animate({ scrollTop: $('#the-chat')[0].scrollHeight}, 1000);
+
+	      			return false;
+	      		});
+
+	      	});
+
+	      	//returns the html to each message
+	      	function template(txt, who) {
+	      		html = '';
+
+	      		html += '<div class="list-group-item">' +
+					    '    <div class="row-picture">' +
+					    '        <img class="circle" src="http://lorempixel.com/56/56/people/1" alt="icon">' +
+					    '    </div>' +
+					    '    <div class="row-content">' +
+					    '    	<div class="least-content" data-time="' + Date.now() + '">' + moment().fromNow() + '</div>' +
+					    '        <h4 class="list-group-item-heading">' + who + '</h4>' +
+					    '        <p class="list-group-item-text">' + txt + '</p>' +
+					    '    </div>' +
+					    '</div>';
+
+				return html;
+	      	}
+
+	      	//works with the time in each message
+	      	setInterval(function(){ 
+	      		$('.least-content').each(function(){
+	      			time = $(this).data('time');
+		      		$(this).html(moment(time).fromNow());
+	      		});
+	      	}, 3000);
+	    </script>
+	</body>
+</html>

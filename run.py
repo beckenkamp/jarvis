@@ -1,3 +1,3 @@
-#!venv\Script\python.exe
+#!venv\Script\python
 from app import app
 app.run(debug=True)

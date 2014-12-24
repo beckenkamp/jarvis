@@ -2,6 +2,7 @@
 """This file contains the public interface to the aiml module."""
 import AimlParser
 import DefaultSubs
+import BotPredicates
 import Utils
 from PatternMgr import PatternMgr
 from WordSub import WordSub
@@ -41,8 +42,8 @@ class Kernel:
         self._addSession(self._globalSessionID)
 
         # Set up the bot predicates
-        self._botPredicates = {}
-        self.setBotPredicate("name", "Nameless")
+        self._botPredicates = BotPredicates.bot
+        
 
         # set up the word substitutors (subbers):
         self._subbers = {}

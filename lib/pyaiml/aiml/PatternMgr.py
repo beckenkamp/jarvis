@@ -20,7 +20,7 @@ class PatternMgr:
 	def __init__(self):
 		self._root = {}
 		self._templateCount = 0
-		self._botName = u"Nameless"
+		self._botName = u"Jarvis"
 		punctuation = "\"`~!@#$%^&*()-_=+[{]}\|;:',<.>/?"
 		self._puncStripRE = re.compile("[" + re.escape(punctuation) + "]")
 		self._whitespaceRE = re.compile("\s+", re.LOCALE | re.UNICODE)

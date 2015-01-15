@@ -4,6 +4,7 @@
 		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 		<link href="/static/bower_components/bootstrap-material-design/dist/css/material-wfont.min.css" rel="stylesheet">
 		<link href="/static/bower_components/bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/1.4.0/annyang.min.js"></script>
 	</head>
 	<body>
 
@@ -24,26 +25,27 @@
 		</div>
 
 		<div class="container-fluid">
-
-			<div class="col-xs-6">
-				<div class="jumbotron">
-					<h1>Jarvis</h1>
-					<p>Practicing english conversations with Jarvis the chatbot.</p>
-					<p><a class="btn btn-primary btn-lg">Learn more</a></p>
-				</div>
-			</div>
-
-			<div class="col-xs-6">
-
-				<div id="the-chat" style="max-height: 275px; overflow-y: scroll;">
-					<div class="list-group">
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="jumbotron">
+						<h1>Jarvis</h1>
+						<p>Practicing english conversations with Jarvis the chatbot.</p>
+						<p><a class="btn btn-primary btn-lg">Learn more</a></p>
 					</div>
 				</div>
 
-				<form id="the-form" method="post" action="/">
-					<input name="question" id="question" value="" class="form-control" placeholder="Chat" data-hint="Let's try some conversation here?" />
-					<button class="btn btn-default">Go!<div class="ripple-wrapper"></div></button>
-				</form>
+				<div class="col-xs-6">
+
+					<div id="the-chat" style="max-height: 275px; overflow-y: scroll;">
+						<div class="list-group">
+						</div>
+					</div>
+
+					<form id="the-form" method="post" action="/">
+						<input name="question" id="question" value="" class="form-control" placeholder="Chat" data-hint="Let's try some conversation here?" />
+						<button class="btn btn-default">Go!<div class="ripple-wrapper"></div></button>
+					</form>
+				</div>
 			</div>
 		</div>
 
@@ -100,6 +102,19 @@
 		      		$(this).html(moment(time).fromNow());
 	      		});
 	      	}, 3000);
+
+	      	if (annyang) {
+	      		var commands = {
+	      			'tell me *chat' : function(chat) {
+	      				$('#question').val(chat);
+	      				$('#the-form').submit();
+	      			}
+	      		}
+
+	      		annyang.addCommands(commands);
+	      		annyang.debug();
+	      		annyang.start();
+	      	}
 	    </script>
 	</body>
 </html>
